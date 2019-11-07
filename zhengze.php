@@ -12,5 +12,4 @@ if (preg_match($preg, $url)) {
 } else {
     echo false;
 }
-
-//
+echo date("Y-m-d H:i:s",time());
