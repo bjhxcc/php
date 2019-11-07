@@ -12,3 +12,4 @@ if (preg_match($preg, $url)) {
 } else {
     echo false;
 }
+
