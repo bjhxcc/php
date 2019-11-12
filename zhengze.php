@@ -14,6 +14,6 @@ if (preg_match($preg, $url)) {
 }
 echo date("Y-m-d H:i:s",time());
 $url="htp://www.baidu.com/index.php?a=p&b=w";
-parse_url($url);
+$url=parse_url($url);
 print_r($url);exit;
 
