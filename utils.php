@@ -170,4 +170,145 @@ function arr2obj($arr)
     }
     return (object) $arr;
 }
-//print_r(arr2obj(['q']));
+// print_r(arr2obj(['q']));
+/**
+ * 关键词高亮
+ *
+ * @param unknown $sString            
+ * @param unknown $aWords            
+ * @return boolean|mixed
+ */
+function highlight($sString, $aWords)
+{
+    if (! is_array($aWords) || empty($aWords) || ! is_string($sString)) {
+        return false;
+    }
+    $sWords = implode('|', $aWords);
+    return preg_replace('@\b(' . $sWords . ')\b@si', '<strong style="background-color:yellow">$1</strong>', $sString);
+}
+// echo highlight('ligang love u,do you know this?', array('love','this'));
+/**
+ * 手机号验证
+ *
+ * @param string $str            
+ * @return bool
+ */
+function mobile($str)
+{
+    return preg_match("/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/", $str);
+}
+
+/**
+ * 固定电话（严格）
+ * 
+ * @param unknown $str            
+ * @return number
+ */
+function telephone($str)
+{
+    return preg_match("/^(0[0-9]{2}-)?([2-9][0-9]{7})$|^(0[0-9]{3}-)?([2-9][0-9]{6})$/", $str);
+}
+
+/**
+ * 固定电话（非严格）
+ * 
+ * @param unknown $str            
+ * @return number
+ */
+function simpletelephone($str)
+{
+    return preg_match("/^\d{11}$/", $str);
+}
+
+/**
+ * 下发手机验证码 6位数字
+ * 
+ * @param unknown $str            
+ * @return number
+ */
+function smsCode($str)
+{
+    return preg_match("/^\d{6}$/", $str);
+}
+
+/**
+ * 验证邮政编码
+ * 
+ * @param unknown $str            
+ * @return number
+ */
+function postCode($str)
+{
+    return preg_match("/^\d{6}$/", $str);
+}
+
+/**
+ * EMAIL验证
+ * 
+ * @param unknown $str            
+ * @return number
+ */
+function email($str)
+{
+    return preg_match("/^([a-zA-Z0-9]+[_|\-|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\-|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/", $str);
+}
+
+/**
+ * QQ验证
+ * 
+ * @param unknown $str            
+ * @return number
+ */
+function qq($str)
+{
+    return preg_match("/^[1-9]\d{4,11}$/", $str);
+}
+
+/**
+ * 用户密码
+ *
+ * @param string $str            
+ * @return boolean
+ */
+function passwd($str)
+{
+    return preg_match("/^[a-zA-Z0-9]{6,20}$/", $str);
+}
+
+/**
+ * 身份证号验证
+ *
+ * @param string $str            
+ * @return boolean
+ */
+function idno($str)
+{
+    return preg_match("/(^\d{15}$)|(^\d{17}(\d|X)$)/", $str);
+}
+
+/**
+ * 检查是一个合法的url
+ * 
+ * @param unknown $str            
+ * @return boolean
+ */
+function url($str)
+{
+    $url = $str;
+    if (filter_var($url, FILTER_VALIDATE_URL)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * 判断一个字符串是不是json
+ * 
+ * @param unknown $str            
+ * @return boolean
+ */
+function isJson($str)
+{
+    return ! is_null(json_decode($str));
+}
