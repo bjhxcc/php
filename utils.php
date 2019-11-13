@@ -1,4 +1,5 @@
 <?php
+header("Content-type:text/html;charset=utf-8");
 
 /**
  * @Author: dreamsun
@@ -74,4 +75,24 @@ function alert($msg)
 {
     echo "<script>alert('$msg');</script>";
 }
-//echo alert('dd');
+// echo alert('dd');
+/**
+ * 列出目录内容
+ *
+ * @param unknown $dir            
+ */
+function list_files($dir)
+{
+    if (is_dir($dir)) {
+        if (opendir($dir)) {
+            $handle = opendir($dir);
+            while (($file = readdir($handle)) !== false) {
+                if ($file != "." && $file != ".." && $file != "Thumbs.db") {
+                    echo $dir . '/' . $file . $file . '<br>';
+                }
+            }
+            closedir($handle);
+        }
+    }
+}
+//echo list_files('D:/wamp/apps');
