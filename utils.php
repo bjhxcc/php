@@ -81,7 +81,7 @@ function alert($msg)
  *
  * @param unknown $dir            
  */
-function list_files($dir)
+function listFiles($dir)
 {
     if (is_dir($dir)) {
         if (opendir($dir)) {
@@ -95,4 +95,79 @@ function list_files($dir)
         }
     }
 }
-//echo list_files('D:/wamp/apps');
+// echo listFiles('D:/wamp/apps');
+/**
+ * api返回信息
+ * 数据返回
+ *
+ * @param [int] $code
+ *            [结果码 200:正常/4**数据问题/5**服务器问题]
+ * @param [string] $msg
+ *            [返回的提示信息]
+ * @param [array] $data
+ *            [返回的数据]
+ * @return [string] [最终的json数据]
+ *        
+ */
+function returnMsg($code, $msg = '', $data = [])
+{
+    /**
+     * ********* 组合数据 **********
+     */
+    $return_data['code'] = $code;
+    $return_data['msg'] = $msg;
+    $return_data['data'] = $data;
+    /**
+     * ********* 返回信息并终止脚本 **********
+     */
+    echo json_encode($return_data, JSON_UNESCAPED_UNICODE);
+    die();
+}
+// echo returnMsg(200, '成功！');
+/**
+ * 对象 转 数组
+ *
+ * @param object $obj
+ *            对象
+ * @return array
+ */
+function object2array($object)
+{
+    $object = json_decode(json_encode($object), true);
+    return $object;
+}
+// print_r(object2array((Object)['q']));
+
+/**
+ * 对象转json数组格式的字符串
+ *
+ * @param unknown $object            
+ * @return mixed
+ */
+function obj2arr($object)
+{
+    $json_object = json_encode($object);
+    $arr = json_decode($json_object, 1);
+    return $arr;
+}
+// print_r(obj2arr((Object)['q']));
+/**
+ * 数组 转 对象
+ *
+ * @param array $arr
+ *            数组
+ * @return object
+ */
+function arr2obj($arr)
+{
+    if (gettype($arr) != 'array') {
+        return;
+    }
+    foreach ($arr as $k => $v) {
+        if (gettype($v) == 'array' || getType($v) == 'object') {
+            $arr[$k] = (object) arr2obj($v);
+        }
+    }
+    return (object) $arr;
+}
+//print_r(arr2obj(['q']));
